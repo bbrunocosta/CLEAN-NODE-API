@@ -1,8 +1,8 @@
-export interface httpRequest {
+export interface HttpRequest {
   body: any
 }
 
-export interface httpResponse {
+export interface HttpResponse {
   status: number
   body: any
 }
