@@ -5,7 +5,7 @@ export default {
     '<rootDir>/src/**/*.js'
   ],
   coverageDirectory: 'coverage',
-  testEnviroment: 'node',
+  testEnvironment: 'node',
   coverageProvider: 'v8',
   transform: {
     '.+\\.ts$': 'ts-jest'
