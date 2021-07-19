@@ -1,8 +1,6 @@
-import { EmailValidator } from '../protocols'
-import { MissingParamError, InvalidParamError, ServerError } from '../errors'
+import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
+import { EmailValidator, Account, AddAccount, AddAccountObj } from './signUp.protocols'
 import { SignUpController } from './signUp.controller'
-import { AddAccount, AddAccountObj } from '../../domain/useCases/addAccount.usecase'
-import { Account } from '../../domain/models/account'
 
 describe('SignUp Controller', () => {
   class AddAccountStub implements AddAccount {
@@ -11,8 +9,7 @@ describe('SignUp Controller', () => {
         id: 'valid id',
         name: 'valid name',
         email: 'valid email',
-        password: 'valid password',
-        passwordConfirmation: 'valid password'
+        password: 'valid password'
       }
       return fakeAccount
     }
@@ -133,11 +130,12 @@ describe('SignUp Controller', () => {
       body: {
         name: 'any name',
         email: 'any email',
-        password: 'any password',
-        passwordConfirmation: 'any password'
+        password: 'anypassword',
+        passwordConfirmation: 'anypassword'
       }
     }
     const { name, email, password } = httpRequest.body
+    sut.handle(httpRequest)
     expect(addAccountSpy).toHaveBeenCalledWith({ name, email, password })
   })
 })
