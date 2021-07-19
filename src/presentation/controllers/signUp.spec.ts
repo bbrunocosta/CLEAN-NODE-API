@@ -2,7 +2,7 @@ import { SignUpController } from './signUp.controller'
 import { MissingParamError } from '../errors/missingParamError'
 import { InvalidParamError } from '../errors/invalidParamError'
 import { EmailValidator } from '../protocols/emailValidator'
-
+import { ServerError } from '../errors/serverError'
 describe('SignUp Controller', () => {
   class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
@@ -74,7 +74,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
   })
   test('Should call isValid with correct email', () => {
-    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid') 
+    const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
     const httpRequest = {
       body: {
         name: 'any name',
@@ -85,5 +85,19 @@ describe('SignUp Controller', () => {
     }
     sut.handle(httpRequest)
     expect(isValidSpy).toBeCalledWith(httpRequest.body.email)
+  })
+  test('Should return 500 if EmailValidator throws', () => {
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => { throw new Error('anyError') })
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'any email',
+        password: 'any password',
+        passwordConfirmation: 'any password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.status).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
