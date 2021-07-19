@@ -6,5 +6,5 @@ export interface AddAccountObj {
   password: string
 }
 export interface AddAccount {
-  add: (addAccountObj: AddAccountObj) => Account
+  add: (addAccountObj: AddAccountObj) => Promise<Account>
 }
