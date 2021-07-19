@@ -27,5 +27,9 @@
     "test:integration": "yarn test --watch -c jest-integration.config.ts",
     "test:staged": "yarn test",
     "test:ci": "yarn jest --coverage"
+  },
+  "dependencies": {
+    "@types/validator": "^13.6.3",
+    "validator": "^13.6.0"
   }
 }
