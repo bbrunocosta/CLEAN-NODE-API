@@ -7,9 +7,7 @@ describe('SignUp Controller', () => {
     add (account: AddAccountObj): Account {
       const fakeAccount = {
         id: 'valid id',
-        name: 'valid name',
-        email: 'valid email',
-        password: 'valid password'
+        ...account
       }
       return fakeAccount
     }
@@ -151,5 +149,22 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.status).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+  test('Should return 201 if correct data was provided', () => {
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'anyemail@test.com',
+        password: 'any password',
+        passwordConfirmation: 'any password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.status).toBe(201)
+    expect(httpResponse.body).toEqual({
+      id: 'valid id',
+      ...httpRequest.body,
+      passwordConfirmation: undefined
+    })
   })
 })
