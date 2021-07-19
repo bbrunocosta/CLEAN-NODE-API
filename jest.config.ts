@@ -1,9 +1,12 @@
 export default {
   roots: ['<rootDir>/src'],
   collectCoverage: true,
+  coverageReporters: ['json', 'html'],
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.js'
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!<rootDir>/src/**/*.js'
   ],
+  testMatch: ['**/*.spec.ts', '**/*.test.ts'],
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
   coverageProvider: 'v8',
