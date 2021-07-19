@@ -8,3 +8,7 @@ export const serverError = (body: any): HttpResponse => ({
   status: 500,
   body
 })
+export const created = (body: any): HttpResponse => ({
+  status: 201,
+  body
+})
