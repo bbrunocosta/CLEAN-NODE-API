@@ -83,7 +83,7 @@ describe('SignUp Controller', () => {
       }
     }
     sut.handle(httpRequest)
-    expect(isValidSpy).toBeCalledWith(httpRequest.body.email)
+    expect(isValidSpy).toHaveBeenCalledWith(httpRequest.body.email)
   })
   test('Should return 500 if EmailValidator throws', () => {
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => { throw new Error('anyError') })
@@ -98,5 +98,18 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.status).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+  test('Should return 400 if password and its confirmation is not the same', () => {
+    const httpRequest = {
+      body: {
+        name: 'any name',
+        email: 'any email',
+        password: 'any password',
+        passwordConfirmation: 'diferent password'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.status).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
   })
 })
