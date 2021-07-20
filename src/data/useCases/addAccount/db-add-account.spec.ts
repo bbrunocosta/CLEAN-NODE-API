@@ -12,7 +12,7 @@ describe('DbAddAccount UseCase', () => {
         id: 'valid id',
         name: 'valid name',
         email: 'valid email',
-        password: 'valid password'
+        password: 'hashed password'
       }
     }
   }
@@ -47,5 +47,14 @@ describe('DbAddAccount UseCase', () => {
     jest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.add(accountData)
     await expect(promise).rejects.toThrow()
+  })
+  test('should return an Account on sucess', async () => {
+    const account = await sut.add(accountData)
+    expect(account).toEqual({
+      id: 'valid id',
+      name: 'valid name',
+      email: 'valid email',
+      password: 'hashed password'
+    })
   })
 })
