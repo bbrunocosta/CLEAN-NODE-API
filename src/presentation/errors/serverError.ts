@@ -31,7 +31,7 @@ export class ServerError extends Error {
     this.message = 'Oops, something went wrong, try again later.'
   }
 
-  toString (): string {
-    return `${this.name} : ${this.message}` // \n${this.feed}
-  }
+  // toString (): string {
+  //   return `${this.name} : ${this.message}` // \n${this.feed}
+  // }
 }

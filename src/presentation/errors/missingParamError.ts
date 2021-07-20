@@ -31,7 +31,7 @@ export class MissingParamError extends Error {
     this.message = `The param ${paramName} is missing`
   }
 
-  toString (): string {
-    return `${this.name} : ${this.message}` // \n${this.feed}
-  }
+  // toString (): string {
+  //   return `${this.name} : ${this.message}` // \n${this.feed}
+  // }
 }

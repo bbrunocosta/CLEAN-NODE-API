@@ -31,7 +31,7 @@ export class InvalidParamError extends Error {
     this.message = `The param ${paramName} is invalid`
   }
 
-  toString (): string {
-    return `${this.name} : ${this.message}` // \n${this.feed}
-  }
+  // toString (): string {
+  //   return `${this.name} : ${this.message}` // \n${this.feed}
+  // }
 }
