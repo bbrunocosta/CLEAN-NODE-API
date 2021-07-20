@@ -29,7 +29,9 @@
     "test:ci": "yarn jest --coverage"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/validator": "^13.6.3",
+    "bcrypt": "^5.0.1",
     "validator": "^13.6.0"
   }
 }
