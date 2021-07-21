@@ -5,7 +5,7 @@ import { LogControllerDecorator } from './logControllerDecorator'
 describe('Log Controller Decorator', () => {
   class ControllerStub {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      return created({})
+      return created({ res: 'ControllerStubResponses' })
     }
   }
   const controllerSub = new ControllerStub()
@@ -20,5 +20,18 @@ describe('Log Controller Decorator', () => {
     }
     await sut.handle(httpRequest)
     expect(handleSpy).toHaveBeenCalledWith(httpRequest)
+  })
+  test('Should return same return of controller', async () => {
+    const httpRequest = {
+      body: {
+        email: ''
+      }
+
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual({
+      status: 201,
+      body: { res: 'ControllerStubResponses' }
+    })
   })
 })
