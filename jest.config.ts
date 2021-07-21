@@ -6,6 +6,7 @@ export default {
     'src/**/*.{js,jsx,ts,tsx}',
     '!<rootDir>/src/**/*.js',
     '!<rootDir>/src/domain/**',
+    '!<rootDir>/src/main/**',
     '!<rootDir>/src/**/*.protocols.ts',
     '!**/protocols/**'
   ],
