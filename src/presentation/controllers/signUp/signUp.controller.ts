@@ -28,8 +28,8 @@ export class SignUpController implements Controller {
       const { name, email, password } = httpRequest.body
       const account = await this.addAccount.add({ name, email, password })
       return created(account)
-    } catch (err) {
-      return serverError(new ServerError())
+    } catch (error) {
+      return serverError(new ServerError(error.stack))
     }
   }
 }
