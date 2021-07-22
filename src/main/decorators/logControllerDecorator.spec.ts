@@ -2,25 +2,26 @@ import { created, serverError } from '../../presentation/helpers/http.helper'
 import { HttpRequest, HttpResponse } from '../../presentation/protocols'
 import { LogControllerDecorator } from './logControllerDecorator'
 
+class ControllerStub {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+    return created({ res: 'ControllerStubResponses' })
+  }
+}
+
+class LogErrorRepositoryStub {
+  async log (stack: string): Promise<void> {}
+}
+
+const FakeHttpRequest = {
+  body: {
+    email: 'testEmail@test.com'
+  }
+}
+
+const fakeError = new Error()
+fakeError.stack = 'any Stack'
+
 describe('Log Controller Decorator', () => {
-  class ControllerStub {
-    async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      return created({ res: 'ControllerStubResponses' })
-    }
-  }
-  class LogErrorRepositoryStub {
-    async log (stack: string): Promise<void> {
-
-    }
-  }
-  const fakeError = new Error()
-  fakeError.stack = 'any Stack'
-  const FakeHttpRequest = {
-    body: {
-      email: ''
-    }
-
-  }
   const logErrorRepositoryStub = new LogErrorRepositoryStub()
   const controllerSub = new ControllerStub()
   const sut = new LogControllerDecorator(controllerSub, logErrorRepositoryStub)
