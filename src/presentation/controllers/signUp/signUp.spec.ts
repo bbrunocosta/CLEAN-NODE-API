@@ -107,7 +107,7 @@ describe('SignUp Controller', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.status).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(new ServerError('any stack'))
   })
   test('Should return 400 if password and its confirmation is not the same', async () => {
     const httpRequest = {
@@ -137,7 +137,7 @@ describe('SignUp Controller', () => {
     expect(addAccountSpy).toHaveBeenCalledWith({ name, email, password })
   })
   test('Should return 500 if AddAccount throws', async () => {
-    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => { throw new Error('anyError') })
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => { throw new Error('any stack') })
     const httpRequest = {
       body: {
         name: 'any name',
@@ -148,7 +148,7 @@ describe('SignUp Controller', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.status).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(new ServerError('any stack'))
   })
   test('Should return 201 if correct data was provided', async () => {
     const httpRequest = {
