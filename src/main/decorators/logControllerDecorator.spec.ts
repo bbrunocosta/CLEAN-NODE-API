@@ -15,28 +15,22 @@ describe('Log Controller Decorator', () => {
   }
   const fakeError = new Error()
   fakeError.stack = 'any Stack'
+  const FakeHttpRequest = {
+    body: {
+      email: ''
+    }
+
+  }
   const logErrorRepositoryStub = new LogErrorRepositoryStub()
   const controllerSub = new ControllerStub()
   const sut = new LogControllerDecorator(controllerSub, logErrorRepositoryStub)
   test('Should call controller.handle', async () => {
     const handleSpy = jest.spyOn(controllerSub, 'handle')
-    const httpRequest = {
-      body: {
-        email: ''
-      }
-
-    }
-    await sut.handle(httpRequest)
-    expect(handleSpy).toHaveBeenCalledWith(httpRequest)
+    await sut.handle(FakeHttpRequest)
+    expect(handleSpy).toHaveBeenCalledWith(FakeHttpRequest)
   })
   test('Should return same return of controller', async () => {
-    const httpRequest = {
-      body: {
-        email: ''
-      }
-
-    }
-    const httpResponse = await sut.handle(httpRequest)
+    const httpResponse = await sut.handle(FakeHttpRequest)
     expect(httpResponse).toEqual({
       status: 201,
       body: { res: 'ControllerStubResponses' }
@@ -45,12 +39,7 @@ describe('Log Controller Decorator', () => {
   test('Sould call LogErrorRepository with correct error if controller returns a server error', async () => {
     jest.spyOn(controllerSub, 'handle').mockReturnValueOnce(Promise.resolve(serverError(fakeError)))
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'log')
-    const httpRequest = {
-      body: {
-        name: 'bruno'
-      }
-    }
-    await sut.handle(httpRequest)
+    await sut.handle(FakeHttpRequest)
     expect(logSpy).toHaveBeenCalledWith('any Stack')
   })
 })
