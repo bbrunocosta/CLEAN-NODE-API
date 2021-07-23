@@ -1,6 +1,6 @@
 # CLEAN-NODE-API
 ### NodeJS REST API implemented with Typescript,  TDD,  SOLID and Clean Architecture.
-PI desenvolvida durante o curso ministrado pelo @rmanguinho.
+API desenvolvida durante o curso ministrado pelo @rmanguinho.
 #### Curso em Adnamento!
 - [x] Representam itens que já estudei no curso - [ ] representam itens que ainda não estudei no curso
 # Princípios
